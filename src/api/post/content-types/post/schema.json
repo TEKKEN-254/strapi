@@ -1,0 +1,109 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Post",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "unique": true,
+      "maxLength": 70,
+      "minLength": 10,
+      "regex": "^(?=.{10,70}$)\\S.*\\S$"
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 160,
+      "minLength": 50,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true,
+      "regex": "^(?=.{50,160}$)\\S[\\s\\S]*\\S$"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "posts"
+    },
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "posts"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "posts"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "minLength": 3,
+      "maxLength": 50,
+      "required": true
+    },
+    "coverImage": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "coverCaption": {
+      "type": "string",
+      "regex": "^[a-zA-Z0-9\\s,.;?!'\"()\\-]{5,100}$",
+      "maxLength": 100,
+      "minLength": 5,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "coverImagePosition": {
+      "type": "string",
+      "default": "center",
+      "regex": "^(top|bottom|left|right|center|\\d+(\\.\\d+)?(px|em|rem|%|vw|vh)?\\s*\\d+(\\.\\d+)?(px|em|rem|%|vw|vh)?)$"
+    },
+    "coverImageSizing": {
+      "type": "string",
+      "regex": "^(cover|contain)$",
+      "default": "cover"
+    }
+  }
+}
